@@ -139,6 +139,10 @@ breaks = c(0, 3, 4, 5) * 10000
 tm_shape(nz) + tm_polygons(col = "Median_income", breaks = breaks)
 tm_shape(nz) + tm_polygons(col = "Median_income", n = 10)
 tm_shape(nz) + tm_polygons(col = "Median_income", palette = "BuGn")
+
+hist(nz$Population, n = 10)
+
+
 ```
 
 ```{r}
@@ -150,7 +154,7 @@ tm_shape(nz) + tm_polygons("Population", palette = "YlOrBr")
 
 ```{r}
 map_nz + 
-  tm_compass(type = "8star", position = c("left", "top")) +
+  tm_compass(type = "rose", position = c("left", "top"), color.dark = "red", color.light = "yellow") +
   tm_scale_bar(breaks = c(0, 100, 200), text.size = 1)
 ```
 
@@ -194,17 +198,21 @@ tm_shape(world) +
 nz_region = st_bbox(c(xmin = 1340000, xmax = 1450000,
                       ymin = 5130000, ymax = 5210000),
                     crs = st_crs(nz_height)) %>%
+  # turns the box into a simple feature class
   st_as_sfc()
 
 nz_region
+plot(nz_region)
 ```
 
 ```{r}
 nz_height_map = tm_shape(nz_elev, bbox = nz_region) +
   tm_raster(style = "cont", palette = "YlGn", legend.show = TRUE) +
   tm_shape(nz_height) +
-  tm_symbols(shape = 2, col = "red", size = 1) +
-  tm_scale_bar(position = c("left", "bottom"))
+  tm_symbols(shape = 2, col = "red", size = 0.25) +
+  tm_scale_bar(position = c("left", "bottom")) +
+  tm_compass(type = "rose", position = c("right", "top"), color.dark = "red", size = 3)
+  
 
 nz_height_map
 ```
@@ -220,6 +228,7 @@ nz_map = tm_shape(nz) +
 nz_map
 ```
 
+### allows you to overlay one map inside another map
 ```{r}
 library(grid)
 
