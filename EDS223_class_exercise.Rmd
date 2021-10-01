@@ -1,0 +1,36 @@
+---
+title: "EDS223_exercies"
+author: "Steven Cognac"
+date: "10/1/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(sf)
+
+```
+
+```{r}
+# crs = coordinate reference system; 4326 is code for WGS84 datum
+# can be searched for at **  https://epsg.io/?q=4326 **
+# NAD83 coordinate system code is 4269
+
+st_sfc(st_point(c(-119.841830, 34.413415)), crs=4326)
+```
+
+```{r}
+
+pt_4326 = st_sfc(st_point(c(-119.841830, 34.413415)), crs=4326)
+pt_4326
+
+
+# transform point that's in WGS coordinate system to NAD83 coordinate system
+st_transform(pt_4326, crs=4269)
+
+# transform point to NAD27 coordinate system
+st_transform(pt_4326, crs = 4267)
+
+```
+
